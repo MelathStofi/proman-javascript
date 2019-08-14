@@ -22,6 +22,16 @@ def get_boards(cursor):
     return cursor.fetchall()
 
 
+@connection.connection_handler
+def get_statuses(cursor):
+    query = """
+        SELECT * FROM boards
+        """
+
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
 def get_cards_for_board(board_id):
     persistence.clear_cache()
     all_cards = persistence.get_cards()
