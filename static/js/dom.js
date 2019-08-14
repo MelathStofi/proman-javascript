@@ -38,6 +38,7 @@ export let dom = {
             `;
         }
 
+
         const outerHtml = `
             <ul class="board-container">
                 ${boardList}
