@@ -43,8 +43,9 @@ export let dom = {
                 ${boardList}
             </ul>
         `;
-
-        this._appendToElement(document.querySelector('#boards'), outerHtml);
+        const boardsDiv = document.querySelector('#boards');
+        boardsDiv.innerHTML = "";
+        this._appendToElement(boardsDiv, outerHtml);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
