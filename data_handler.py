@@ -31,7 +31,9 @@ def get_statuses(cursor):
     return cursor.fetchall()
 
 
+@connection.connection_handler
 def save_board_title(cursor, board_title):
+    print(board_title)
     query = """
         INSERT INTO boards(title) VALUES (%(board_title)s);
         """

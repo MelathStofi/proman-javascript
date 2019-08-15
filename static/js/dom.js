@@ -28,50 +28,55 @@ export let dom = {
             dom.showBoards(boards);
         });
     },
+
+    createBoardDivs: function(title){
+        const columns = dom.appendColumns();
+        console.log(columns);
+        const boardList = `
+                <section class = "board">
+                    <div class="board-header"><span class="board-title">${title}</span>
+                        <button class="board-add">Add Card</button>
+                        <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                    </div>
+                    <div class = "board-columns">${columns}</div>
+                </section>
+            `;
+        return boardList
+    },
     showBoards: function (boards) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
 
         let boardList = '';
 
-        for(let board of boards){
-            boardList += `
-                <section class = "board">
-                    <div class="board-header"><span class="board-title">${board.title}</span>
-                        <button class="board-add">Add Card</button>
-                        <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
-                    </div>
-                    <div class = "board-columns"></div>
-                </section>
-            `;
-        }
+        for(let board of boards) {
+            boardList += dom.createBoardDivs(board.title);}
 
 
-        const outerHtml = `
+            const outerHtml = `
             <div class="board-container">
                 ${boardList}
             </div>
         `;
-        const boardsDiv = document.querySelector('#boards');
-        boardsDiv.innerHTML = "";
-        this._appendToElement(boardsDiv, outerHtml);
-        dom.appendColumns();
+            const boardsDiv = document.querySelector('#boards');
+            boardsDiv.innerHTML = "";
+            this._appendToElement(boardsDiv, outerHtml);
+            dom.appendColumns();
 
     },
 
     appendColumns: function(){
         const statusHeaders = ['New','In Progress', 'Testing', 'Done'];
-        const boardColumns = document.querySelectorAll(".board-columns");
+        let columns = "";
 
-        for(let boardColumn of boardColumns) {
             for(let status of statusHeaders){
-                boardColumn.innerHTML +=
+                columns +=
                 `<div class="board-column">
                     <div class="board-column-title">${status}</div>
                     <div class="board-column-content"></div>
                 </div>`;
             }
-        }
+        return columns
     },
     showStatusColumns: function(){
     },
@@ -90,15 +95,19 @@ export let dom = {
             event.preventDefault();
             console.log("click");
             let boardTitle = document.querySelector('#board-title').value;
+                        console.log(boardTitle);
+
             dataHandler.createNewBoard(boardTitle, function(){
                 dom.addNewBoard(boardTitle);
             })
         })
     },
     addNewBoard: function(boardTitle){
-        let node = document.createElement('li');
-        let textnode = document.createTextNode(boardTitle);
-        node.appendChild(textnode);
-        document.querySelector("#boards").appendChild(node);
+
+        const textNode = dom.createBoardDivs(boardTitle);
+        const board = document.getElementById("boards");
+        dom._appendToElement(board, textNode,false);
+        dom.appendColumns();
+
     }
 };
