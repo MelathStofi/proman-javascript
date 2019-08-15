@@ -23,6 +23,12 @@ def get_boards():
     return data_handler.get_boards()
 
 
+@app.route("/save-board")
+@json_response
+def save_new_board(board_title):
+    return data_handler.save_board_title(board_title=board_title)
+
+
 @app.route("/get-cards/<int:board_id>")
 @json_response
 def get_cards_for_board(board_id: int):

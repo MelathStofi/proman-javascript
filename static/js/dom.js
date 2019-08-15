@@ -56,4 +56,15 @@ export let dom = {
         // it adds necessary event listeners also
     },
 
+
+    getBoardTitle: function () {
+        let saveTitle = document.querySelector('#save-title-btn');
+        saveTitle.addEventListener('click', function(event) {
+            event.preventDefault();
+            console.log("click");
+            let boardTitle = document.querySelector('#board-title').value;
+            dataHandler.createNewBoard(boardTitle)
+        })
+    },
+
 };
