@@ -2,9 +2,9 @@
 
 {% block content %}
     <h1>ProMan</h1>
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create New Board</button>
-
+    <section class="board-columns">
+        <button type="button" class="create-new-board btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Create New Board</button>
+    </section>
     <form id="new-board">
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -19,7 +19,7 @@
                 <input type="text" id="board-title" size="30">
               </div>
               <div class="modal-footer">
-                <button id="save-title-btn" type="submit" class="btn btn-primary" data-dismiss="modal">Save</button>
+                <button id="save-title-btn" type="submit" class="btn btn-secondary" data-dismiss="modal">Save</button>
               </div>
             </div>
           </div>
@@ -27,4 +27,5 @@
     </form>
     <br><br>
     <div id="boards">Boards are loading...</div>
+
 {% endblock %}
