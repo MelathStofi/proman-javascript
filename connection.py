@@ -5,6 +5,12 @@ import psycopg2
 import psycopg2.extras
 
 
+USER_NAME = os.environ.get('PSQL_USER_NAME')
+PASSWORD = os.environ.get('PSQL_PASSWORD')
+HOST = os.environ.get('PSQL_HOST')
+DATABASE_NAME = os.environ.get('PSQL_DB_NAME')
+
+
 def get_connection_string():
     # setup connection string
     # to do this, please define these environment variables first

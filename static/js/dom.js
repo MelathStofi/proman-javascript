@@ -14,11 +14,11 @@ export let dom = {
                 elementToExtend.appendChild(childNode);
             }
         }
-
         return elementToExtend.lastChild;
     },
     init: function () {
         // This function should run once, when the page is loaded.
+        dom.getBoardTitle();
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -26,27 +26,49 @@ export let dom = {
             dom.showBoards(boards);
         });
     },
+    createBoardDivs: function(title){
+        const columns = dom.appendColumns();
+        return `
+            <section class = "board">
+                <div class="board-header"><span class="board-title">${title}</span>
+                    <button class="board-add">Add Card</button>
+                    <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                </div>
+                <div class = "board-columns">${columns}</div>
+            </section>
+            `;
+    },
     showBoards: function (boards) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
-
         let boardList = '';
 
-        for(let board of boards){
-            boardList += `
-                <li>${board.title}</li>
+        for(let board of boards) {
+            boardList += dom.createBoardDivs(board.title);}
+            const outerHtml = `
+                <div class="board-container">
+                    ${boardList}
+                </div>
             `;
-        }
-
-
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `;
         const boardsDiv = document.querySelector('#boards');
         boardsDiv.innerHTML = "";
         this._appendToElement(boardsDiv, outerHtml);
+        dom.appendColumns();
+    },
+    appendColumns: function(){
+        const statusHeaders = ['New','In Progress', 'Testing', 'Done'];
+        let columns = "";
+
+            for(let status of statusHeaders){
+                columns +=
+                `<div class="board-column">
+                    <div class="board-column-title">${status}</div>
+                    <div class="board-column-content"></div>
+                </div>`;
+            }
+        return columns
+    },
+    showStatusColumns: function(){
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -55,13 +77,10 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
     },
-
-
     getBoardTitle: function () {
         let saveTitle = document.querySelector('#save-title-btn');
         saveTitle.addEventListener('click', function(event) {
             event.preventDefault();
-            console.log("click");
             let boardTitle = document.querySelector('#board-title').value;
             dataHandler.createNewBoard(boardTitle, function(){
                 dom.addNewBoard(boardTitle);
@@ -69,9 +88,9 @@ export let dom = {
         })
     },
     addNewBoard: function(boardTitle){
-        let node = document.createElement('li');
-        let textnode = document.createTextNode(boardTitle);
-        node.appendChild(textnode);
-        document.querySelector("#boards").appendChild(node);
+        const textNode = dom.createBoardDivs(boardTitle);
+        const board = document.getElementById("boards");
+        dom._appendToElement(board, textNode,false);
+        dom.appendColumns();
     }
 };

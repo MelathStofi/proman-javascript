@@ -23,11 +23,21 @@ def get_boards():
     return data_handler.get_boards()
 
 
+@app.route("/get-statuses")
+@json_response
+def get_statuses():
+    """
+    All the boards
+    """
+    return data_handler.get_statuses()
+
+
 @app.route("/save-board", methods=["POST"])
 @json_response
 def save_new_board():
     board_title = request.get_json()
     return data_handler.save_board_title(board_title)
+
 
 
 @app.route("/get-cards/<int:board_id>")
