@@ -89,7 +89,7 @@ export let dom = {
     },
     addNewBoard: function(boardTitle){
         const textNode = dom.createBoardDivs(boardTitle);
-        const board = document.getElementById("boards");
+        const board = document.querySelector('.board-container');
         dom._appendToElement(board, textNode,false);
         dom.appendColumns();
     }

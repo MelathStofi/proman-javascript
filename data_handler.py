@@ -37,7 +37,7 @@ def save_board_title(cursor, board_title):
     query = """
         INSERT INTO boards(title) VALUES (%(board_title)s);
         """
-    parameter = {"board_title":board_title}
+    parameter = {"board_title": board_title}
     cursor.execute(query, parameter)
 
 
