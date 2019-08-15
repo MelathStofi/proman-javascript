@@ -17,7 +17,6 @@ def get_boards(cursor):
     query = """
         SELECT * FROM boards
         """
-
     cursor.execute(query)
     return cursor.fetchall()
 
@@ -30,6 +29,14 @@ def get_statuses(cursor):
 
     cursor.execute(query)
     return cursor.fetchall()
+
+
+def save_board_title(cursor, board_title):
+    query = """
+        INSERT INTO boards(title) VALUES (%(board_title)s);
+        """
+    parameter = {"board_title":board_title}
+    cursor.execute(query, parameter)
 
 
 def get_cards_for_board(board_id):

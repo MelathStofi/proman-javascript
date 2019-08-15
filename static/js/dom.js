@@ -19,6 +19,8 @@ export let dom = {
     },
     init: function () {
         // This function should run once, when the page is loaded.
+        dom.getBoardTitle();
+
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -43,6 +45,7 @@ export let dom = {
                 </section>
             `;
         }
+
 
         const outerHtml = `
             <div class="board-container">
@@ -79,5 +82,23 @@ export let dom = {
         // shows the cards of a board
         // it adds necessary event listeners also
     },
-    // here comes more features
+
+
+    getBoardTitle: function () {
+        let saveTitle = document.querySelector('#save-title-btn');
+        saveTitle.addEventListener('click', function(event) {
+            event.preventDefault();
+            console.log("click");
+            let boardTitle = document.querySelector('#board-title').value;
+            dataHandler.createNewBoard(boardTitle, function(){
+                dom.addNewBoard(boardTitle);
+            })
+        })
+    },
+    addNewBoard: function(boardTitle){
+        let node = document.createElement('li');
+        let textnode = document.createTextNode(boardTitle);
+        node.appendChild(textnode);
+        document.querySelector("#boards").appendChild(node);
+    }
 };
