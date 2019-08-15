@@ -63,8 +63,15 @@ export let dom = {
             event.preventDefault();
             console.log("click");
             let boardTitle = document.querySelector('#board-title').value;
-            dataHandler.createNewBoard(boardTitle)
+            dataHandler.createNewBoard(boardTitle, function(){
+                dom.addNewBoard(boardTitle);
+            })
         })
     },
-
+    addNewBoard: function(boardTitle){
+        let node = document.createElement('li');
+        let textnode = document.createTextNode(boardTitle);
+        node.appendChild(textnode);
+        document.querySelector("#boards").appendChild(node);
+    }
 };

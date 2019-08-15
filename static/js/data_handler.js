@@ -22,7 +22,8 @@ export let dataHandler = {
 
         fetch(url, {
             method: 'POST',
-            headers: new Headers(),
+            headers: {
+            'Content-Type': 'application/json'},
             body:JSON.stringify(data)
         })
         .then(response => response.json())
