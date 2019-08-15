@@ -37,13 +37,12 @@ export let dom = {
                 <section class = "board">
                     <div class="board-header"><span class="board-title">${board.title}</span>
                         <button class="board-add">Add Card</button>
-                        <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                        <button class="board-toggle"><i class="fas fa-chevron-down">${String.fromCharCode(709)}</i></button>
                     </div>
                     <div class = "board-columns"></div>
                 </section>
             `;
         }
-
         const outerHtml = `
             <div class="board-container">
                 ${boardList}
@@ -52,8 +51,6 @@ export let dom = {
         const boardsDiv = document.querySelector('#boards');
         boardsDiv.innerHTML = "";
         this._appendToElement(boardsDiv, outerHtml);
-        dom.appendColumns();
-
     },
 
     appendColumns: function(){
