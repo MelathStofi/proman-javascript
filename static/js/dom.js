@@ -34,18 +34,49 @@ export let dom = {
 
         for(let board of boards){
             boardList += `
-                <li>${board.title}</li>
+                <section class = "board">
+                    <div class="board-header"><span class="board-title">${board.title}</span>
+                        <button class="board-add">Add Card</button>
+                        <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                    </div>
+                    <div class = "board-columns"></div>
+                </section>
             `;
-        }
 
+        }
+        
         const outerHtml = `
-            <ul class="board-container">
+            <div class="board-container">
                 ${boardList}
-            </ul>
+            </div>
         `;
         const boardsDiv = document.querySelector('#boards');
         boardsDiv.innerHTML = "";
         this._appendToElement(boardsDiv, outerHtml);
+        this._appendToElement(document.querySelector('#boards'), outerHtml);
+        dom.appendColumns();
+
+    },
+
+    appendColumns: function(){
+
+        const statusHeaders = ['New','In Progress', 'Testing', 'Done'];
+        const boardColumns = document.querySelectorAll(".board-columns");
+
+
+        for(let boardColumn of boardColumns) {
+            let statusList = '';
+            for(let status in statusHeaders){
+                 statusList +=
+                    `<div class="board-column">
+                        <div class="board-column-title">${status}</div>
+                        <div class="board-column-content"></div>
+                    </div>`
+            }
+            boardColumns.appendChild(statusList);
+        }
+    },
+    showStatusColumns: function(){
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
