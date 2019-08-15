@@ -53,7 +53,6 @@ export let dom = {
         const boardsDiv = document.querySelector('#boards');
         boardsDiv.innerHTML = "";
         this._appendToElement(boardsDiv, outerHtml);
-        dom.appendColumns();
     },
     appendColumns: function(){
         const statusHeaders = ['New','In Progress', 'Testing', 'Done'];
@@ -91,6 +90,5 @@ export let dom = {
         const textNode = dom.createBoardDivs(boardTitle);
         const board = document.querySelector('.board-container');
         dom._appendToElement(board, textNode,false);
-        dom.appendColumns();
     }
 };
