@@ -33,12 +33,14 @@ def get_statuses(cursor):
 
 @connection.connection_handler
 def save_board_title(cursor, board_title):
-    print(board_title)
     query = """
-        INSERT INTO boards(title) VALUES (%(board_title)s);
+        INSERT INTO boards(title) VALUES (%(board_title)s)
+        RETURNING id, title;
         """
     parameter = {"board_title": board_title}
     cursor.execute(query, parameter)
+    board_id = cursor.fetchone()
+    return board_id
 
 
 def get_cards_for_board(board_id):

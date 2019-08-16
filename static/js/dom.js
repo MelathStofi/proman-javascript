@@ -26,11 +26,11 @@ export let dom = {
             dom.showBoards(boards);
         });
     },
-    createBoardDivs: function(title){
+    createBoardDivs: function(board){
         const columns = dom.appendColumns();
         return `
-            <section class = "board">
-                <div class="board-header"><span class="board-title">${title}</span>
+            <section id="${board.id}" class = "board">
+                <div class="board-header"><span class="board-title">${board.title}</span>
                     <button class="board-add">Add Card</button>
                     <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                 </div>
@@ -44,7 +44,7 @@ export let dom = {
         let boardList = '';
 
         for(let board of boards) {
-            boardList += dom.createBoardDivs(board.title);}
+            boardList += dom.createBoardDivs(board);}
             const outerHtml = `
                 <div class="board-container">
                     ${boardList}
@@ -81,14 +81,15 @@ export let dom = {
         saveTitle.addEventListener('click', function(event) {
             event.preventDefault();
             let boardTitle = document.querySelector('#board-title').value;
-            dataHandler.createNewBoard(boardTitle, function(){
-                dom.addNewBoard(boardTitle);
+            dataHandler.createNewBoard(boardTitle, function(board){
+                dom.addNewBoard(board);
             })
         })
     },
-    addNewBoard: function(boardTitle){
-        const textNode = dom.createBoardDivs(boardTitle);
-        const board = document.querySelector('.board-container');
-        dom._appendToElement(board, textNode,false);
+    addNewBoard: function(board){
+        console.log(board);
+        const textNode = dom.createBoardDivs(board);
+        const newBoard = document.querySelector('.board-container');
+        dom._appendToElement(newBoard, textNode,false);
     }
 };
