@@ -32,8 +32,8 @@ export let dom = {
     createBoardDivs: function(board){
         const columns = dom.appendColumns(board.id);
         return `
-            <section class = "board">
-                <div id="" class="board-header"><span class="board-title">${board.title}</span>
+            <section id="${board.id}" class = "board">
+                <div class="board-header"><span class="board-title">${board.title}</span>
                     <button class="board-add">Add Card</button>
                     <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                 </div>
@@ -85,7 +85,6 @@ export let dom = {
         for (let column of columnContent) {
             for (let card of cards) {
                 if (card.status_id === Number(column.dataset.statusId) && card.board_id === Number(column.dataset.boardId)) {
-                    console.log(card);
                     column.innerHTML += dom.createCardDivs(card);
                 }
             }
@@ -104,15 +103,15 @@ export let dom = {
         saveTitle.addEventListener('click', function(event) {
             event.preventDefault();
             let boardTitle = document.querySelector('#board-title').value;
-            dataHandler.createNewBoard(boardTitle, function(){
-                dom.addNewBoard(boardTitle);
+            dataHandler.createNewBoard(boardTitle, function(board){
+                dom.addNewBoard(board);
             })
         })
     },
-    addNewBoard: function(boardTitle){
-        const textNode = dom.createBoardDivs(boardTitle);
-        console.log(textNode);
-        const board = document.querySelector('.board-container');
-        dom._appendToElement(board, textNode,false);
+    addNewBoard: function(board){
+        console.log(board);
+        const textNode = dom.createBoardDivs(board);
+        const newBoard = document.querySelector('.board-container');
+        dom._appendToElement(newBoard, textNode,false);
     }
 };

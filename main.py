@@ -32,11 +32,12 @@ def get_statuses():
     return data_handler.get_statuses()
 
 
-@app.route("/save-board", methods=["POST"])
+@app.route("/save-board", methods=["GET", "POST"])
 @json_response
 def save_new_board():
     board_title = request.get_json()
-    return data_handler.save_board_title(board_title)
+    board_id = data_handler.save_board_title(board_title)
+    return board_id
 
 
 
