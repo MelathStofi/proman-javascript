@@ -33,7 +33,6 @@ def get_statuses(cursor):
 
 @connection.connection_handler
 def save_board_title(cursor, board_title):
-    print(board_title)
     query = """
         INSERT INTO boards(title) VALUES (%(board_title)s);
         """
@@ -41,12 +40,13 @@ def save_board_title(cursor, board_title):
     cursor.execute(query, parameter)
 
 
-def get_cards_for_board(board_id):
-    persistence.clear_cache()
-    all_cards = persistence.get_cards()
-    matching_cards = []
-    for card in all_cards:
-        if card['board_id'] == str(board_id):
-            card['status_id'] = get_card_status(card['status_id'])  # Set textual status for the card
-            matching_cards.append(card)
-    return matching_cards
+@connection.connection_handler
+def get_cards_for_board(cursor, board_id):
+    query = """
+        SELECT * FROM cards
+        WHERE cards.board_id = %(board_id)s 
+        """
+    parameter = {'board_id': board_id}
+    cursor.execute(query, parameter)
+
+    return cursor.fetchall()
