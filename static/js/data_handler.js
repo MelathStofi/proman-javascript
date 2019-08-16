@@ -37,9 +37,9 @@ export let dataHandler = {
 
         // Here we use an arrow function to keep the value of 'this' on dataHandler.
         //    if we would use function(){...} here, the value of 'this' would change.
-        this._api_get('/get-boards', (response) => {
-            this._data = response;
-            callback(response);
+        this._api_get('/get-boards', (boards) => {
+            this._data = boards;
+            callback(boards);
         });
     },
     getBoard: function (boardId, callback) {
@@ -48,7 +48,7 @@ export let dataHandler = {
     getStatuses: function (callback) {
         // the statuses are retrieved and then the callback function is called with the statuses
         this._api_get('/get-statuses',(response) => {
-            this._data._
+
         })
     },
     getStatus: function (statusId, callback) {
@@ -56,9 +56,10 @@ export let dataHandler = {
     },
     getCardsByBoardId: function (boardId, callback) {
         // the cards are retrieved and then the callback function is called with the cards
-        this._api_get('/get-cards/' + boardId + '/', (response) => {
-            this._data = response;
-            callback(response);
+        const url = '/get-cards/' + boardId;
+        this._api_get(url, (cards) => {
+            this._data = cards;
+            callback(cards);
         });
     },
     getCard: function (cardId, callback) {

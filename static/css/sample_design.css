@@ -127,3 +127,11 @@ section.board{
 .card-title{
     padding-right: 16px;
 }
+
+.create-new-board, .btn, .btn-secondary{
+    max-width: 960px;
+    margin: 0 auto;
+    color: black;
+
+
+}
