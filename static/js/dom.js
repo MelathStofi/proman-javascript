@@ -116,16 +116,12 @@ export let dom = {
         dom._appendToElement(newBoard, textNode,false);
     },
     createCard: function(colToExtend) {
-        let newCardTitle = "New Card";
-        dom._appendToElement(colToExtend, newCardTitle, false)
 
     },
     clickWindow: function(){
         $(window).click(function(e) {
             if (e.target.className === "board-add"){
-                let colToExtend = e.target.parentElement.nextElementSibling.firstElementChild;
-                console.log(colToExtend);
-                this.createCard(colToExtend)
+                console.log('add');
             }
         });
     }
