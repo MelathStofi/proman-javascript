@@ -69,6 +69,10 @@ section.board{
     flex-wrap: nowrap;
 }
 
+.board-columns-hidden{
+    display: none;
+}
+
 .board-column{
     padding: 10px;
     flex: 1;

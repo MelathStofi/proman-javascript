@@ -35,7 +35,7 @@ export let dom = {
             <section id="${board.id}" class = "board">
                 <div class="board-header"><span class="board-title">${board.title}</span>
                     <button class="board-add">Add Card</button>
-                    <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                    <button class="board-toggle"><i class="fa fa-chevron-down"></i></button>
                 </div>
                 <div class = "board-columns">${columns}</div>
             </section>
@@ -57,8 +57,8 @@ export let dom = {
         const boardsDiv = document.querySelector('#boards');
         boardsDiv.innerHTML = "";
         this._appendToElement(boardsDiv, outerHtml);
-        // this.createCard();
         this.clickWindow();
+        this.collapseBoards();
     },
     appendColumns: function(boardId){
         const statusHeaders = ['New','In Progress', 'Testing', 'Done'];
@@ -116,17 +116,26 @@ export let dom = {
         dom._appendToElement(newBoard, textNode,false);
     },
     createCard: function(colToExtend) {
-        let newCardTitle = "New Card";
-        dom._appendToElement(colToExtend, newCardTitle, false)
-
     },
     clickWindow: function(){
         $(window).click(function(e) {
             if (e.target.className === "board-add"){
                 let colToExtend = e.target.parentElement.nextElementSibling.firstElementChild;
                 console.log(colToExtend);
-                this.createCard(colToExtend)
+                dom.createCard(colToExtend)
             }
         });
+    },
+    collapseBoards: function () {
+        $(window).click(function(e) {
+            if (e.target.className === "board-toggle") {
+                const boardColumns = e.target.parentElement.nextElementSibling;
+                if (boardColumns.className === "board-columns") {
+                    boardColumns.className = "board-columns-hidden";
+                } else {
+                    boardColumns.className = "board-columns"
+                }
+            }
+        })
     }
 };
