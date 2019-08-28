@@ -57,6 +57,8 @@ export let dom = {
         const boardsDiv = document.querySelector('#boards');
         boardsDiv.innerHTML = "";
         this._appendToElement(boardsDiv, outerHtml);
+        // this.createCard();
+        this.clickWindow();
     },
     appendColumns: function(boardId){
         const statusHeaders = ['New','In Progress', 'Testing', 'Done'];
@@ -109,9 +111,18 @@ export let dom = {
         })
     },
     addNewBoard: function(board){
-        console.log(board);
         const textNode = dom.createBoardDivs(board);
         const newBoard = document.querySelector('.board-container');
         dom._appendToElement(newBoard, textNode,false);
+    },
+    createCard: function(colToExtend) {
+
+    },
+    clickWindow: function(){
+        $(window).click(function(e) {
+            if (e.target.className === "board-add"){
+                console.log('add');
+            }
+        });
     }
 };
