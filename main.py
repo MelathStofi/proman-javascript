@@ -40,6 +40,14 @@ def save_new_board():
     return board_id
 
 
+@app.route("/save-card", methods=["GET", "POST"])
+@json_response
+def save_new_card():
+    card_to_db = request.get_json()
+    print(card_to_db)
+    card_from_db = data_handler.save_new_card_data(card_to_db)
+    return card_from_db
+
 
 @app.route("/get-cards/<int:board_id>")
 @json_response

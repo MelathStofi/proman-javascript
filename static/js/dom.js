@@ -101,10 +101,10 @@ export let dom = {
             `
     },
     loadBoardTitle: function () {
-        let saveTitle = document.querySelector('#save-title-btn');
+        const saveTitle = document.querySelector('#save-title-btn');
         saveTitle.addEventListener('click', function(event) {
             event.preventDefault();
-            let boardTitle = document.querySelector('#board-title').value;
+            const boardTitle = document.querySelector('#board-title').value;
             dataHandler.createNewBoard(boardTitle, function(board){
                 dom.addNewBoard(board);
             })
@@ -113,15 +113,35 @@ export let dom = {
     addNewBoard: function(board){
         const textNode = dom.createBoardDivs(board);
         const newBoard = document.querySelector('.board-container');
-        dom._appendToElement(newBoard, textNode,false);
+        dom._appendToElement(newBoard, textNode);
     },
-    createCard: function(colToExtend) {
-
+    createCard: function(card, colToExtend) {
+        const new_card = dom.createCardDivs(card);
+        dom._appendToElement(colToExtend, new_card);
     },
     clickWindow: function(){
         $(window).click(function(e) {
             if (e.target.className === "board-add"){
-                console.log('add');
+                const board = e.target.parentNode;
+                const boardId = board.parentElement.id;
+                const colToExtend = board.nextElementSibling.firstElementChild.lastElementChild;
+                const statusId = colToExtend.dataset.statusId;
+
+                const input = document.createElement('input');
+                input.className = 'card-input';
+                const button = document.createElement('button');
+                button.className = 'card-add';
+                button.textContent = 'Add';
+                board.appendChild(input);
+                board.appendChild(button);
+                const buttonInElement = document.querySelector('.card-add');
+
+                buttonInElement.addEventListener('click', () => {
+                    const cardTitle = document.querySelector('.card-input').value;
+                    dataHandler.createNewCard(cardTitle, boardId, statusId, function(card){
+                        dom.createCard(card, colToExtend);
+                    })
+                })
             }
         });
     }

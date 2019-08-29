@@ -53,3 +53,20 @@ def get_cards_for_board(cursor, board_id):
     cursor.execute(query, parameter)
 
     return cursor.fetchall()
+
+
+@connection.connection_handler
+def save_new_card_data(cursor, card_to_db):
+    print(card_to_db)
+    query = """
+        INSERT INTO cards
+        (board_id, title, status_id)
+        VALUES (%(board_id)s, %(title)s, %(status_id)s)
+        RETURNING id, title, status_id
+        """
+    parameter = {'board_id': int(card_to_db[0]['board_id']),
+                 'title': card_to_db[0]['title'],
+                 'status_id': int(card_to_db[0]['status_id'])}
+
+    cursor.execute(query, parameter)
+    return cursor.fetchall()
