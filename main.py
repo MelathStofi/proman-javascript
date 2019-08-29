@@ -43,9 +43,11 @@ def save_new_board():
 @app.route("/save-card", methods=["GET", "POST"])
 @json_response
 def save_new_card():
-    card_to_db = request.get_json()
-    print(card_to_db)
-    card_from_db = data_handler.save_new_card_data(card_to_db)
+    card_from_db = data_handler.save_new_card_data({
+        'board_id': int(request.json['board_id']),
+        'title': request.json['title'],
+        'status_id': int(request.json['status_id'])
+    })
     return card_from_db
 
 

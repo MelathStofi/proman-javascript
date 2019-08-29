@@ -64,9 +64,6 @@ def save_new_card_data(cursor, card_to_db):
         VALUES (%(board_id)s, %(title)s, %(status_id)s)
         RETURNING id, title, status_id
         """
-    parameter = {'board_id': int(card_to_db[0]['board_id']),
-                 'title': card_to_db[0]['title'],
-                 'status_id': int(card_to_db[0]['status_id'])}
 
-    cursor.execute(query, parameter)
+    cursor.execute(query, card_to_db)
     return cursor.fetchall()

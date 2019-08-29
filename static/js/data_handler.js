@@ -79,7 +79,7 @@ export let dataHandler = {
             'title': cardTitle,
             'status_id': Number(statusId)
         };
-        this._api_post('/save-card', cardTitle,  (response) => {
+        this._api_post('/save-card', card,  (response) => {
             this._data = response;
             callback(response);
         })

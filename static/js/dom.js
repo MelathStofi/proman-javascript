@@ -1,5 +1,5 @@
 // It uses data_handler.js to visualize elements
-import { dataHandler } from "./data_handler.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -22,14 +22,14 @@ export let dom = {
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getBoards(function(boards){
+        dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
             for (let board of boards) {
                 dom.loadCards(board.id);
             }
         });
     },
-    createBoardDivs: function(board){
+    createBoardDivs: function (board) {
         const columns = dom.appendColumns(board.id);
         return `
             <section id="${board.id}" class = "board">
@@ -46,10 +46,10 @@ export let dom = {
         // it adds necessary event listeners also
         let boardList = '';
 
-        for(let board of boards) {
+        for (let board of boards) {
             boardList += dom.createBoardDivs(board);
         }
-            const outerHtml = `
+        const outerHtml = `
                 <div class="board-container">
                     ${boardList}
                 </div>
@@ -60,19 +60,19 @@ export let dom = {
         // this.createCard();
         this.clickWindow();
     },
-    appendColumns: function(boardId){
-        const statusHeaders = ['New','In Progress', 'Testing', 'Done'];
+    appendColumns: function (boardId) {
+        const statusHeaders = ['New', 'In Progress', 'Testing', 'Done'];
         let columns = "";
-            for(let i = 0; i < statusHeaders.length; i++){
-                columns +=
+        for (let i = 0; i < statusHeaders.length; i++) {
+            columns +=
                 `<div class="board-column">
                     <div class="board-column-title">${statusHeaders[i]}</div>
                     <div class="board-column-content" data-board-id="${boardId}" data-status-id="${i}"></div>
                 </div>`;
-            }
+        }
         return columns
     },
-    showStatusColumns: function(){
+    showStatusColumns: function () {
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -102,26 +102,26 @@ export let dom = {
     },
     loadBoardTitle: function () {
         const saveTitle = document.querySelector('#save-title-btn');
-        saveTitle.addEventListener('click', function(event) {
+        saveTitle.addEventListener('click', function (event) {
             event.preventDefault();
             const boardTitle = document.querySelector('#board-title').value;
-            dataHandler.createNewBoard(boardTitle, function(board){
+            dataHandler.createNewBoard(boardTitle, function (board) {
                 dom.addNewBoard(board);
             })
         })
     },
-    addNewBoard: function(board){
+    addNewBoard: function (board) {
         const textNode = dom.createBoardDivs(board);
         const newBoard = document.querySelector('.board-container');
         dom._appendToElement(newBoard, textNode);
     },
-    createCard: function(card, colToExtend) {
+    createCard: function (card, colToExtend) {
         const new_card = dom.createCardDivs(card);
         dom._appendToElement(colToExtend, new_card);
     },
-    clickWindow: function(){
-        $(window).click(function(e) {
-            if (e.target.className === "board-add"){
+    clickWindow: function () {
+        $(window).click(function (e) {
+            if (e.target.className === "board-add") {
                 const board = e.target.parentNode;
                 const boardId = board.parentElement.id;
                 const colToExtend = board.nextElementSibling.firstElementChild.lastElementChild;
@@ -138,7 +138,7 @@ export let dom = {
 
                 buttonInElement.addEventListener('click', () => {
                     const cardTitle = document.querySelector('.card-input').value;
-                    dataHandler.createNewCard(cardTitle, boardId, statusId, function(card){
+                    dataHandler.createNewCard(cardTitle, boardId, statusId, function (card) {
                         dom.createCard(card, colToExtend);
                     })
                 })
